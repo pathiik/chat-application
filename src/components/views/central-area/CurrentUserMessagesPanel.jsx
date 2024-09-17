@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import DateInfo from "../../ui/central-panel/messages-ui/DateInfo";
 import ReceivedImage from "../../ui/central-panel/messages-ui/ReceivedImage";
 import ReceivedText from "../../ui/central-panel/messages-ui/ReceivedText";
@@ -6,6 +6,11 @@ import SentImage from "../../ui/central-panel/messages-ui/SentImage";
 import SentText from "../../ui/central-panel/messages-ui/SentText";
 
 function CurrentUserMessagesPanel() {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
   
   return (
     <>
@@ -15,8 +20,8 @@ function CurrentUserMessagesPanel() {
         <ReceivedText />
         <SentImage />
         <SentText />
+        <div ref={scrollRef}></div>
       </div>
-      <div ref={scrollRef}></div>
     </>
   );
 }
