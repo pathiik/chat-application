@@ -62,6 +62,7 @@ function SignupForm({ isChecked, setIsChecked }) {
           <Checkbox
             text="I agree to the terms and conditions"
             isChecked={isChecked}
+            disabled={password === "" || confirmPassword === ""}
             onChange={() => setIsChecked((prev) => !prev)}
           />
           {error ? (
