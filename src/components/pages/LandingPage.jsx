@@ -20,7 +20,7 @@ function LandingPage() {
           <h1 className="font-bold text-5xl">ChatMap</h1>
         </div>
         {isNewUser ? (
-          <SignupPanel />
+          <SignupPanel setIsNewUser={setIsNewUser} />
         ) : (
           <div className="w-full flex justify-between items-center">
             <LoginPanel />

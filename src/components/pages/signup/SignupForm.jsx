@@ -10,10 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Checkbox from "../ui/Checkbox";
 
-function SignupForm() {
+function SignupForm({ isChecked, setIsChecked }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState("");
 
   const passwordMatch = password === confirmPassword;
@@ -28,7 +27,7 @@ function SignupForm() {
 
   return (
     <>
-      <div className="w-1/2 p-4 flex flex-col justify-between items-center">
+      <div className="w-1/3 p-4 flex flex-col justify-between items-center">
         <div className="bg-white rounded-md shadow-lg flex flex-col p-5 gap-3 justify-between">
           <p className="text-3xl text-center font-bold mb-2">Signup</p>
           <InputBox
