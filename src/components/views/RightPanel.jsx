@@ -6,7 +6,7 @@ import CurrentUserBlockStatusPanel from "./right-aside/CurrentUserBlockStatusPan
 function RightPanel({ showPanel, showChatDetails }) {
   return (
     <>
-      <div className={`w-1/5 p-2 flex flex-col ${showPanel ? "" : "hidden"}`}>
+      <div className={`overflow-y-scroll w-1/5 p-2 flex flex-col ${showPanel ? "" : "hidden"}`}>
         <CurrentUserFullInfoPanel showChatDetails={showChatDetails} />
         <CurrentUserShared />
         <CurrentUserBlockStatusPanel />
