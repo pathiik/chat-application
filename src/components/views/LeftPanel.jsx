@@ -5,6 +5,7 @@ import SearchNewUserPopup from "../ui/left-side-panel/SearchNewUserPopup";
 
 function LeftPanel() {
   const [newUser, setNewUser] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   function handleNewChat() {
     setNewUser(true);
@@ -19,8 +20,15 @@ function LeftPanel() {
     <>
       <div className="w-1/4 relative">
         <div className={`h-full flex flex-col ${newUser ? "blur-sm" : ""}`}>
-          <InfoSearchArea handleNewChat={handleNewChat} />
-          <UsersMessageArea isPopupVisible={newUser} />
+          <InfoSearchArea
+            handleNewChat={handleNewChat}
+            isMenuVisible={isMenuVisible}
+            setIsMenuVisible={setIsMenuVisible}
+          />
+          <UsersMessageArea
+            isPopupVisible={newUser}
+            isMenuVisible={isMenuVisible}
+          />
         </div>
 
         {newUser && (
