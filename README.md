@@ -1,26 +1,42 @@
 # 💬 ChatMap - A realtime chat application
 
-ChatMap is a realtime chat application that allows users to chat with each other in real-time. It is built using React and Tailwind CSS. The application uses Firebase Firestore to store the chat messages and Firebase Authentication to authenticate users.
+ChatMap is a real-time chat application that allows users to chat with each other in real-time. It is built using React and Tailwind CSS. The application uses Firebase Firestore to store the chat messages and Firebase Authentication to authenticate users.
 
-### 🛠️ Tech Stack
+## 🛠️ Tech Stack
+
+### Frontend
 
 - React
-- Tailiwind CSS
 - Vite
+- Tailiwind CSS
 - FontAwesome
-- Emoji Picker React
 
-### Dependencies
+### Backend
 
-- FontAwesome Libraries:
-  - `@fortawesome/fontawesome-svg-core`
-  - `@fortawesome/free-regular-svg-icons`
-  - `@fortawesome/free-solid-svg-icons`
-  - `@fortawesome/react-fontawesome`
-- Emoji Picker React:
-  - `emoji-picker-react`
+- Firebase
 
-### Run Locally
+## Dependencies
+
+### 1. FontAwesome
+
+- `@fortawesome/fontawesome-svg-core`
+- `@fortawesome/free-regular-svg-icons`
+- `@fortawesome/free-solid-svg-icons`
+- `@fortawesome/react-fontawesome` (React Integration)
+
+### 2. Firebase
+
+- `firebase`
+
+### 3. Emoji Picker
+
+- `emoji-picker-react`
+
+### 4. Tailwind CSS
+
+- `tailwindcss`
+
+## Run Locally
 
 1. Clone the repository
    ```bash
@@ -35,11 +51,11 @@ ChatMap is a realtime chat application that allows users to chat with each other
    npm run dev
    ```
 
-### Support
+## Support
 
 If you like this project, give it a ⭐ and share it with friends!
 
-### 📬 Feedback
+## 📬 Feedback
 
 If you have any feedback, please reach out to me at pathik.b45@gmail.com
 
