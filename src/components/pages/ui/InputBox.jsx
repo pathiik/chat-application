@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-function InputBox({ iconName, inputType, placeholderText, value, onChange }) {
+function InputBox({ iconName, name, inputType, placeholderText, value, onChange }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const updatedInputType =
@@ -19,6 +19,7 @@ function InputBox({ iconName, inputType, placeholderText, value, onChange }) {
         <input
           className="outline-none w-full bg-transparent"
           type={updatedInputType}
+          name={name}
           placeholder={placeholderText}
           onChange={onChange}
           value={value}

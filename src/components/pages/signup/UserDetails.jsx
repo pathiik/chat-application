@@ -37,12 +37,18 @@ function UserDetails({ isChecked }) {
                 </div>
               )}
               <div className="flex flex-col justify-center items-center gap-2">
-                <label className="font-bold">Add Profile Picture</label>
+                <label
+                  htmlFor="profilePicture"
+                  className="cursor-pointer text-sm hover:text-green-500 underline"
+                >
+                  Add Profile Picture
+                </label>
                 <input
                   type="file"
+                  id="profilePicture"
                   accept="image/*"
                   onChange={handleProfilePictureChange}
-                  className=" w-52 rounded"
+                  className=" w-52 rounded hidden"
                 />
               </div>
             </div>

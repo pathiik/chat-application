@@ -9,6 +9,9 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Checkbox from "../ui/Checkbox";
+import { auth, db } from "../../../firebase/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 function SignupForm({ isChecked, setIsChecked }) {
   const [password, setPassword] = useState("");
@@ -17,7 +20,27 @@ function SignupForm({ isChecked, setIsChecked }) {
 
   const passwordMatch = password === confirmPassword;
 
-  const handleSignup = () => {
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const { name, email, username, password } = Object.fromEntries(formData);
+
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", res.user.uid), {
+        username,
+        email,
+        id: res.user.uid,
+        blocked: [],
+      });
+
+      await setDoc(doc(db, "userChats", res.user.uid), {
+        chats: [],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
     if (!passwordMatch) {
       setError("Passwords do not match");
     } else {
@@ -28,52 +51,61 @@ function SignupForm({ isChecked, setIsChecked }) {
   return (
     <>
       <div className="w-1/3 p-4 flex flex-col justify-between items-center">
-        <div className="bg-white rounded-md shadow-lg flex flex-col p-5 gap-3 justify-between">
-          <p className="text-3xl text-center font-bold mb-2">Signup</p>
-          <InputBox
-            iconName={faUser}
-            inputType="text"
-            placeholderText="Enter your name..."
-          />
-          <InputBox
-            iconName={faEnvelope}
-            inputType="email"
-            placeholderText="Enter your email..."
-          />
-          <InputBox
-            iconName={faAt}
-            inputType="text"
-            placeholderText="Enter your username..."
-          />
-          <InputBox
-            iconName={faLock}
-            inputType="password"
-            placeholderText="Enter your password..."
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <InputBox
-            iconName={faCheckDouble}
-            inputType="password"
-            placeholderText="Confirm your password..."
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <Checkbox
-            text="I agree to the terms and conditions"
-            isChecked={isChecked}
-            disabled={password === "" || confirmPassword === ""}
-            onChange={() => setIsChecked((prev) => !prev)}
-          />
-          {error ? (
-            <p className="text-red-500">Passwords do not match</p>
-          ) : (
-            <Button
-              buttonText="Signup"
-              handleClick={handleSignup}
-              disabled={!isChecked || !passwordMatch}
+        <div className="bg-white rounded-md shadow-lg">
+          <p className="text-3xl text-center font-bold mt-3">Signup</p>
+          <form
+            className="flex flex-col p-5 gap-3 justify-between"
+            onSubmit={handleSignup}
+          >
+            <InputBox
+              iconName={faUser}
+              name="name"
+              inputType="text"
+              placeholderText="Enter your name..."
             />
-          )}
+            <InputBox
+              iconName={faEnvelope}
+              name="email"
+              inputType="email"
+              placeholderText="Enter your email..."
+            />
+            <InputBox
+              iconName={faAt}
+              name="username"
+              inputType="text"
+              placeholderText="Enter your username..."
+            />
+            <InputBox
+              iconName={faLock}
+              inputType="password"
+              name="password"
+              placeholderText="Enter your password..."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputBox
+              iconName={faCheckDouble}
+              inputType="password"
+              name="confirmPassword"
+              placeholderText="Confirm your password..."
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <Checkbox
+              text="I agree to the terms and conditions"
+              isChecked={isChecked}
+              disabled={password === "" || confirmPassword === ""}
+              onChange={() => setIsChecked((prev) => !prev)}
+            />
+            {error ? (
+              <p className="text-red-500">Passwords do not match</p>
+            ) : (
+              <Button
+                buttonText="Signup"
+                disabled={!isChecked || !passwordMatch}
+              />
+            )}
+          </form>
         </div>
       </div>
     </>

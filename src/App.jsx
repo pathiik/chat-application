@@ -5,7 +5,7 @@ import RightPanel from "./components/views/RightPanel";
 import LandingPage from "./components/pages/LandingPage";
 
 function App() {
-  const user = true;
+  const user = false;
 
   const [isChatDetailsVisible, setIsChatDetailsVisible] = useState(false);
 
