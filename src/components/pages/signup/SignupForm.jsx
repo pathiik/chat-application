@@ -12,8 +12,9 @@ import Checkbox from "../ui/Checkbox";
 import { auth, db } from "../../../firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import upload from "../../../firebase/upload";
 
-function SignupForm({ isChecked, setIsChecked }) {
+function SignupForm({ isChecked, setIsChecked, profilePictureFile }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,9 +28,18 @@ function SignupForm({ isChecked, setIsChecked }) {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      let profilePictureUrl = "";
+
+      if (profilePictureFile) {
+        profilePictureUrl = await upload(profilePictureFile, "profilePictures");
+      }
+
       await setDoc(doc(db, "users", res.user.uid), {
+        name,
         username,
         email,
+        profilePictureUrl,
         id: res.user.uid,
         blocked: [],
       });

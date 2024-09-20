@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import InputBox from "../ui/InputBox";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
-import Button from "../ui/Button";
 
-function UserDetails({ isChecked }) {
+function UserDetails({ isChecked, setProfilePictureFile }) {
   const [profilePicture, setProfilePicture] = useState(null);
   const [bio, setBio] = useState("");
 
-  const handleProfilePictureChange = (e) => {
+  const handleProfilePictureChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfilePicture(URL.createObjectURL(file));
+      setProfilePictureFile(file);
     }
   };
 

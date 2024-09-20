@@ -4,12 +4,20 @@ import UserDetails from "./UserDetails";
 
 function SignupPanel({ setIsNewUser }) {
   const [isChecked, setIsChecked] = useState(false);
+  const [profilePictureFile, setProfilePictureFile] = useState("");
 
   return (
     <>
       <div className="flex justify-center items-center">
-        <SignupForm isChecked={isChecked} setIsChecked={setIsChecked} />
-        <UserDetails isChecked={isChecked} />
+        <SignupForm
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+          profilePictureFile={profilePictureFile}
+        />
+        <UserDetails
+          isChecked={isChecked}
+          setProfilePictureFile={setProfilePictureFile}
+        />
       </div>
       <p className="mt-1 text-center">
         Already have an account?{" "}
