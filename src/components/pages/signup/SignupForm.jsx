@@ -18,11 +18,13 @@ function SignupForm({ isChecked, setIsChecked, profilePictureFile }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const passwordMatch = password === confirmPassword;
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.target);
     const { name, email, username, password } = Object.fromEntries(formData);
 
@@ -49,6 +51,12 @@ function SignupForm({ isChecked, setIsChecked, profilePictureFile }) {
       });
     } catch (error) {
       console.error(error);
+    } finally {
+      e.target.reset();
+      setPassword("");
+      setConfirmPassword("");
+      setIsChecked(false);
+      setLoading(false);
     }
 
     if (!passwordMatch) {
@@ -111,8 +119,8 @@ function SignupForm({ isChecked, setIsChecked, profilePictureFile }) {
               <p className="text-red-500">Passwords do not match</p>
             ) : (
               <Button
-                buttonText="Signup"
-                disabled={!isChecked || !passwordMatch}
+                buttonText={loading ? "Loading..." : "Signup"}
+                disabled={!isChecked || !passwordMatch || loading}
               />
             )}
           </form>
