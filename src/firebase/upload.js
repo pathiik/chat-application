@@ -16,19 +16,16 @@ const upload = async (file) => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          // console.log(`Upload is ${progress}% done`);
         },
         (error) => {
-          console.error("Upload failed", error);
           reject(error);
         },
         async () => {
           try {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            console.log("File available at", downloadURL);
             resolve(downloadURL);
           } catch (error) {
-            console.error("Failed to get download URL", error);
             reject(error);
           }
         }
