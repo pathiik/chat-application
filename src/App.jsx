@@ -11,7 +11,7 @@ function App() {
   const { currentUser, isLoading, fetchUserInfo } = useUserStore();
 
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         fetchUserInfo(user?.uid);
       } else {
@@ -20,7 +20,7 @@ function App() {
     });
 
     return () => {
-      unSubscribe();
+      unsub();
     };
   }, [fetchUserInfo]);
 
