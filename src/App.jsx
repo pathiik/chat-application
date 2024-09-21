@@ -13,9 +13,9 @@ function App() {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        fetchUserInfo(user.uid);
+        fetchUserInfo(user?.uid);
       } else {
-        console.log("No user is signed in.");
+        fetchUserInfo(null);
       }
     });
 

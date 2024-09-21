@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "../../../lib/firebase";
 
 function OptionsModal({ isMenuVisible }) {
   return (
@@ -8,7 +9,10 @@ function OptionsModal({ isMenuVisible }) {
           <div className="px-4 py-3 text-center w-24 cursor-pointer hover:bg-green-200 rounded-t-md">
             <p>Profile</p>
           </div>
-          <div className="px-4 py-3 text-center w-24 cursor-pointer hover:bg-green-200 rounded-b-md">
+          <div
+            className="px-4 py-3 text-center w-24 cursor-pointer hover:bg-green-200 rounded-b-md"
+            onClick={() => auth.signOut()}
+          >
             <p>Logout</p>
           </div>
         </div>
