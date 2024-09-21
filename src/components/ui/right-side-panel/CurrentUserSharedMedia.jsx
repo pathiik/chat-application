@@ -10,7 +10,7 @@ function CurrentUserSharedMedia() {
           {isRecentMedia ? "Recent Media" : "All Media"}
         </p>
         <div
-          className={`grid grid-cols-3 max-h-48 ${
+          className={`grid grid-cols-3 h-44 ${
             isRecentMedia
               ? "overflow-hidden"
               : "overflow-y-scroll overflow-x-hidden"
@@ -18,63 +18,63 @@ function CurrentUserSharedMedia() {
         >
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""
           />
           <img
             className={`rounded-lg p-1 ${
-              isRecentMedia ? "w-24 h-24" : "w-20 h-20"
+              isRecentMedia ? "w-24 aspect-square" : "w-20 h-20"
             }`}
             src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
             alt=""

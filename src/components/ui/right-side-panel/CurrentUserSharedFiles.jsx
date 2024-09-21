@@ -39,7 +39,7 @@ function CurrentUserSharedFiles() {
             </div>
             <FontAwesomeIcon
               icon={faDownload}
-              className="text-md cursor-pointer hover:text-green-500 text-gray-500"
+              className="text-md cursor-pointer hover:text-green-500 text-gray-500  mr-1"
               title="Download"
             />
           </div>
@@ -55,7 +55,7 @@ function CurrentUserSharedFiles() {
             </div>
             <FontAwesomeIcon
               icon={faDownload}
-              className="text-md cursor-pointer hover:text-green-500 text-gray-500"
+              className="text-md cursor-pointer hover:text-green-500 text-gray-500  mr-1"
               title="Download"
             />
           </div>
@@ -71,7 +71,7 @@ function CurrentUserSharedFiles() {
             </div>
             <FontAwesomeIcon
               icon={faDownload}
-              className="text-md cursor-pointer hover:text-green-500 text-gray-500"
+              className="text-md cursor-pointer hover:text-green-500 text-gray-500  mr-1"
               title="Download"
             />
           </div>
@@ -87,7 +87,7 @@ function CurrentUserSharedFiles() {
             </div>
             <FontAwesomeIcon
               icon={faDownload}
-              className="text-md cursor-pointer hover:text-green-500 text-gray-500"
+              className="text-md cursor-pointer hover:text-green-500 text-gray-500  mr-1"
               title="Download"
             />
           </div>
@@ -105,7 +105,7 @@ function CurrentUserSharedFiles() {
             </div>
             <FontAwesomeIcon
               icon={faDownload}
-              className="text-md cursor-pointer hover:text-green-500 text-gray-500"
+              className="text-md cursor-pointer hover:text-green-500 text-gray-500 mr-1"
               title="Download"
             />
           </div>
