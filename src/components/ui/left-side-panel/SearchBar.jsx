@@ -2,7 +2,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-function SearchBar() {
+function SearchBar({ name }) {
   return (
     <>
       <div className="m-2">
@@ -14,6 +14,7 @@ function SearchBar() {
             className="px-1 tracking-wider w-full bg-transparent focus:outline-none"
             type="text"
             placeholder="Search"
+            name={name}
           />
         </div>
       </div>

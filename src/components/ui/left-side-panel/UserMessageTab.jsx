@@ -1,9 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDot } from "@fortawesome/free-solid-svg-icons";
+import { useUserStore } from "../../../lib/userStore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../../../lib/firebase";
 
 function UserMessageTab() {
   const [isSeen, setIsSeen] = useState(false);
+  const [chats, setChats] = useState([]);
+
+  const { currentUser } = useUserStore();
+
+  useEffect(() => {
+    if (!currentUser?.id) return;
+    const unsub = onSnapshot(doc(db, "userChats", currentUser.id), async (res) => {
+      const items = res.data().chats;
+
+      const promises = items.map(async (item) => {
+        const userDocRef = doc(db, "users", item.id);
+        const userDocSnap = await getDoc(userDocRef);
+
+        const user = userDocSnap.data();
+
+        return {...item, user};
+      })
+
+      const chatData = await Promise.all(promises);
+
+      setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+    });
+    return () => {
+      unsub();
+    };
+  }, [currentUser?.id]);
 
   return (
     <>
@@ -24,7 +53,7 @@ function UserMessageTab() {
               )}
             </div>
             <div className="flex justify-between items-center" title="Hey!">
-              <p className="text-sm">Hey!</p>
+              <p className="text-sm">{chats.lastMessage}</p>
               {!isSeen ? (
                 <p className="text-green-500 text-xs">
                   <FontAwesomeIcon icon={faCircleDot} />
