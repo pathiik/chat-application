@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LeftPanel from "./components/views/LeftPanel";
 import CenterPanel from "./components/views/CenterPanel";
 import RightPanel from "./components/views/RightPanel";
 import LandingPage from "./components/pages/LandingPage";
+import { auth } from "./firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
   const user = false;
+
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+      } else {
+        console.log("No user is signed in.");
+      }
+    });
+
+    return () => {
+      unSubscribe();
+    };
+  }, []);
 
   const [isChatDetailsVisible, setIsChatDetailsVisible] = useState(false);
 

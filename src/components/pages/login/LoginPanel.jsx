@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import InputBox from "../ui/InputBox";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import Button from "../ui/Button";
+import { auth } from "../../../firebase/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 
 function LoginPanel() {
-  const handleLogin = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.target);
+    const { email, password } = Object.fromEntries(formData);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      e.target.reset();
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,7 +43,10 @@ function LoginPanel() {
               name="password"
               placeholderText="Password..."
             />
-            <Button buttonText="Login" />
+            <Button
+              buttonText={loading ? "Loading..." : "Signup"}
+              disabled={loading}
+            />
           </form>
         </div>
       </div>

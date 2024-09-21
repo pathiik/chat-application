@@ -55,8 +55,8 @@ function SignupForm({ isChecked, setIsChecked, profilePictureFile }) {
       e.target.reset();
       setPassword("");
       setConfirmPassword("");
-      setIsChecked(false);
       setLoading(false);
+      window.location.reload();
     }
 
     if (!passwordMatch) {
