@@ -8,6 +8,7 @@ import { db } from "../../../lib/firebase";
 
 function SearchNewUserPopup({ onPopupClose }) {
   const [user, setUser] = useState(null);
+  const [userNotFound, setUserNotFound] = useState(false);
   const handleSearch = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -17,9 +18,13 @@ function SearchNewUserPopup({ onPopupClose }) {
       const userRef = collection(db, "users");
       const q = query(userRef, where("username", "==", username));
       const querySnapshot = await getDocs(q);
-      
+
       if (!querySnapshot.empty) {
         setUser(querySnapshot.docs[0].data());
+        setUserNotFound(false);
+      } else {
+        setUser(null);
+        setUserNotFound(true);
       }
     } catch (error) {
       console.error(error);
@@ -49,14 +54,20 @@ function SearchNewUserPopup({ onPopupClose }) {
         </div>
       </form>
       {user ? (
-        <div className="max-h-80 overflow-x-hidden overflow-y-scroll">
+        <div className="max-h-80 overflow-x-hidden">
           <AddNewUserTab
             profilePicure={user.profilePictureUrl}
             name={user.name}
             username={user.username}
           />
         </div>
-      ) : null}
+      ) : userNotFound ? (
+        <div className="text-center text-red-500 font-semibold">
+          No user found with the username.
+        </div>
+      ) : (
+        null
+      )}
     </div>
   );
 }

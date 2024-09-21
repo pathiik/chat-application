@@ -5,7 +5,6 @@ import Button from "../ui/Button";
 import { auth } from "../../../lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-
 function LoginPanel() {
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +43,7 @@ function LoginPanel() {
               placeholderText="Password..."
             />
             <Button
-              buttonText={loading ? "Loading..." : "Signup"}
+              buttonText={loading ? "Loading..." : "Login"}
               disabled={loading}
             />
           </form>
