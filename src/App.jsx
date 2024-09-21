@@ -3,16 +3,17 @@ import LeftPanel from "./components/views/LeftPanel";
 import CenterPanel from "./components/views/CenterPanel";
 import RightPanel from "./components/views/RightPanel";
 import LandingPage from "./components/pages/LandingPage";
-import { auth } from "./firebase/firebase";
+import { auth } from "./lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useUserStore } from "./lib/userStore";
 
 function App() {
-  const user = false;
+  const { currentUser, isLoading, fetchUserInfo } = useUserStore();
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
+        fetchUserInfo(user.uid);
       } else {
         console.log("No user is signed in.");
       }
@@ -21,7 +22,7 @@ function App() {
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [fetchUserInfo]);
 
   const [isChatDetailsVisible, setIsChatDetailsVisible] = useState(false);
 
@@ -29,9 +30,13 @@ function App() {
     setIsChatDetailsVisible((prev) => !prev);
   };
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
-      {user ? (
+      {currentUser ? (
         <div className="p-2 flex gap-2 h-screen">
           <LeftPanel />
           <CenterPanel

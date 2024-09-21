@@ -28,11 +28,15 @@ ChatMap is a real-time chat application that allows users to chat with each othe
 
 - `firebase`
 
-### 3. Emoji Picker
+### 3. Zustand
+
+- `zustand`
+
+### 4. Emoji Picker
 
 - `emoji-picker-react`
 
-### 4. Tailwind CSS
+### 5. Tailwind CSS
 
 - `tailwindcss`
 
@@ -44,7 +48,19 @@ ChatMap is a real-time chat application that allows users to chat with each othe
    ```
 2. Install the dependencies
    ```bash
-   npm install
+   npm install --save @fortawesome/fontawesome-svg-core
+   npm install --save @fortawesome/free-solid-svg-icons
+   npm install --save @fortawesome/free-regular-svg-icons
+   npm install --save @fortawesome/free-brands-svg-icons
+   npm install --save @fortawesome/react-fontawesome@latest
+
+   npm install firebase
+
+   npm install zustand
+
+   npm install emoji-picker-react
+
+   npm install tailwindcss
    ```
 3. Run the development server
    ```bash

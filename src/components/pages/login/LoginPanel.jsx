@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputBox from "../ui/InputBox";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import Button from "../ui/Button";
-import { auth } from "../../../firebase/firebase";
+import { auth } from "../../../lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 

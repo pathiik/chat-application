@@ -9,10 +9,10 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Checkbox from "../ui/Checkbox";
-import { auth, db } from "../../../firebase/firebase";
+import { auth, db } from "../../../lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import upload from "../../../firebase/upload";
+import upload from "../../../lib/upload";
 
 function SignupForm({ isChecked, setIsChecked, profilePictureFile }) {
   const [password, setPassword] = useState("");
