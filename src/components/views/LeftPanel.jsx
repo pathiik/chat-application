@@ -6,10 +6,10 @@ import SearchNewUserPopup from "../ui/left-side-panel/SearchNewUserPopup";
 function LeftPanel() {
   const [newUser, setNewUser] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [chats, setChats] = useState([]);
 
   function handleNewChat() {
     setNewUser(true);
-    console.log("new chat");
   }
 
   function onPopupClose() {
@@ -28,12 +28,16 @@ function LeftPanel() {
           <UsersMessageArea
             isPopupVisible={newUser}
             isMenuVisible={isMenuVisible}
+            chats={chats}
           />
         </div>
 
         {newUser && (
           <div className="absolute z-50 left-1/2 translate -translate-x-1/2 top-20 drop-shadow-2xl">
-            <SearchNewUserPopup onPopupClose={onPopupClose} />
+            <SearchNewUserPopup
+              onPopupClose={onPopupClose}
+              setChats={setChats}
+            />
           </div>
         )}
       </div>

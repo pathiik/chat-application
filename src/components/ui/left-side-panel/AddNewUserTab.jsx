@@ -2,11 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
-function AddNewUserTab({ profilePicure, name, username }) {
-  const handleNewChat = (e) => {
-    e.preventDefault();
-    console.log("New Chat");
-  };
+function AddNewUserTab({ profilePicure, name, username, handleNewChat }) {
   return (
     <>
       <div className="px-2 py-3 mt-2">

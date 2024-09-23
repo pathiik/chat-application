@@ -3,12 +3,24 @@ import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import AddNewUserTab from "./AddNewUserTab";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  query,
+  where,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../../../lib/firebase";
+import { useUserStore } from "../../../lib/userStore";
 
-function SearchNewUserPopup({ onPopupClose }) {
+function SearchNewUserPopup({ onPopupClose, setChats }) {
   const [user, setUser] = useState(null);
   const [userNotFound, setUserNotFound] = useState(false);
+
   const handleSearch = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -30,6 +42,48 @@ function SearchNewUserPopup({ onPopupClose }) {
       console.error(error);
     }
   };
+
+  const { currentUser } = useUserStore();
+  const handleNewChat = async (e) => {
+    e.preventDefault();
+    const chatRef = collection(db, "chats");
+    const userChatsRef = collection(db, "userChats");
+
+    try {
+      const newChatRef = doc(chatRef);
+      const userChatDocRef = doc(userChatsRef, user.id);
+      const currentUserChatDocRef = doc(userChatsRef, currentUser.id);
+
+      await setDoc(newChatRef, {
+        createdAt: serverTimestamp(),
+        messages: [],
+      });
+
+      const newChat = {
+        chatId: newChatRef.id,
+        lastMessage: "",
+        receiverId: currentUser.id,
+        updatedAt: Date.now(),
+      };
+
+      await updateDoc(userChatDocRef, {
+        chats: arrayUnion(newChat),
+      });
+
+      await updateDoc(currentUserChatDocRef, {
+        chats: arrayUnion({
+          ...newChat,
+          receiverId: user.id,
+        }),
+      });
+
+      setChats((prevChats) => [...prevChats, { ...newChat, user }]);
+      onPopupClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="bg-white p-6 rounded shadow-lg w-max max-w-80 h-max">
       <form onSubmit={handleSearch} className="mb-2">
@@ -59,15 +113,14 @@ function SearchNewUserPopup({ onPopupClose }) {
             profilePicure={user.profilePictureUrl}
             name={user.name}
             username={user.username}
+            handleNewChat={handleNewChat}
           />
         </div>
       ) : userNotFound ? (
         <div className="text-center text-red-500 font-semibold">
           No user found with the username.
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
     </div>
   );
 }
