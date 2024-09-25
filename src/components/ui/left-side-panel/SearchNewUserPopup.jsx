@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
@@ -8,11 +8,12 @@ import {
   collection,
   doc,
   getDocs,
-  setDoc,
   updateDoc,
   query,
   where,
   serverTimestamp,
+  addDoc,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { useUserStore } from "../../../lib/userStore";
@@ -20,6 +21,31 @@ import { useUserStore } from "../../../lib/userStore";
 function SearchNewUserPopup({ onPopupClose, setChats }) {
   const [user, setUser] = useState(null);
   const [userNotFound, setUserNotFound] = useState(false);
+  const { currentUser } = useUserStore();
+
+  const fetchUserChats = async (userId) => {
+    try {
+      const userChatsRef = doc(db, "userChats", userId);
+      const userChatsSnapshot = await getDoc(userChatsRef);
+
+      if (userChatsSnapshot.exists()) {
+        const chats = userChatsSnapshot.data().chats || [];
+        setChats(chats);
+        console.log(chats);
+      } else {
+        console.log("User chats not found");
+        setChats([]);
+      }
+    } catch (error) {
+      console.error("Error fetching user chats:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUserChats(currentUser.id);
+    }
+  }, [currentUser]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -32,45 +58,45 @@ function SearchNewUserPopup({ onPopupClose, setChats }) {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        setUser(querySnapshot.docs[0].data());
+        const userData = querySnapshot.docs[0].data();
+        const userId = querySnapshot.docs[0].id;
+        setUser({ ...userData, id: userId });  
         setUserNotFound(false);
       } else {
         setUser(null);
         setUserNotFound(true);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error searching user:", error);
     }
   };
 
-  const { currentUser } = useUserStore();
   const handleNewChat = async (e) => {
     e.preventDefault();
-    const chatRef = collection(db, "chats");
-    const userChatsRef = collection(db, "userChats");
 
     try {
-      const newChatRef = doc(chatRef);
-      const userChatDocRef = doc(userChatsRef, user.id);
-      const currentUserChatDocRef = doc(userChatsRef, currentUser.id);
-
-      await setDoc(newChatRef, {
+      const chatRef = await addDoc(collection(db, "chats"), {
         createdAt: serverTimestamp(),
         messages: [],
       });
 
       const newChat = {
-        chatId: newChatRef.id,
+        chatId: chatRef.id,
         lastMessage: "",
         receiverId: currentUser.id,
         updatedAt: Date.now(),
+        userDetails: { 
+          name: user.name,
+          username: user.username,
+          profilePictureUrl: user.profilePictureUrl
+        }
       };
 
-      await updateDoc(userChatDocRef, {
+      await updateDoc(doc(db, "userChats", user.id), {
         chats: arrayUnion(newChat),
       });
 
-      await updateDoc(currentUserChatDocRef, {
+      await updateDoc(doc(db, "userChats", currentUser.id), {
         chats: arrayUnion({
           ...newChat,
           receiverId: user.id,
@@ -78,9 +104,10 @@ function SearchNewUserPopup({ onPopupClose, setChats }) {
       });
 
       setChats((prevChats) => [...prevChats, { ...newChat, user }]);
+
       onPopupClose();
     } catch (error) {
-      console.error(error);
+      console.error("Error creating new chat:", error);
     }
   };
 
@@ -110,7 +137,7 @@ function SearchNewUserPopup({ onPopupClose, setChats }) {
       {user ? (
         <div className="max-h-80 overflow-x-hidden">
           <AddNewUserTab
-            profilePicure={user.profilePictureUrl}
+            profilePicture={user.profilePictureUrl} // Correct typo here
             name={user.name}
             username={user.username}
             handleNewChat={handleNewChat}

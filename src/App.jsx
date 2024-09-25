@@ -6,10 +6,12 @@ import LandingPage from "./components/pages/LandingPage";
 import { auth } from "./lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useUserStore } from "./lib/userStore";
+import { useChatStore } from "./lib/chatStore";
 
 function App() {
   const { currentUser, isLoading, fetchUserInfo } = useUserStore();
-
+  const { chatId } = useChatStore();
+  
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -39,14 +41,18 @@ function App() {
       {currentUser ? (
         <div className="p-2 flex gap-2 h-screen">
           <LeftPanel />
-          <CenterPanel
-            showChatDetails={showChatDetails}
-            isChatDetailsVisible={isChatDetailsVisible}
-          />
-          <RightPanel
-            showPanel={isChatDetailsVisible}
-            showChatDetails={() => setIsChatDetailsVisible(false)}
-          />
+          {chatId && (
+            <CenterPanel
+              showChatDetails={showChatDetails}
+              isChatDetailsVisible={isChatDetailsVisible}
+            />
+          )}
+          {chatId && (
+            <RightPanel
+              showPanel={isChatDetailsVisible}
+              showChatDetails={() => setIsChatDetailsVisible(false)}
+            />
+          )}
         </div>
       ) : (
         <LandingPage />

@@ -6,10 +6,12 @@ import SentImage from "../../ui/central-panel/messages-ui/SentImage";
 import SentText from "../../ui/central-panel/messages-ui/SentText";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
+import { useChatStore } from "../../../lib/chatStore";
 
 function CurrentUserMessagesPanel() {
   const [allChat, setAllChat] = useState([]);
   const scrollRef = useRef(null);
+  const { chatId } = useChatStore();
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -17,7 +19,7 @@ function CurrentUserMessagesPanel() {
 
   useEffect(() => {
     const unSub = onSnapshot(
-      doc(db, "chats", "HuYtyKSHSEhJIpp70FyD9nqJ6sY2"),
+      doc(db, "chats", chatId),
       (res) => {
         setAllChat(res.data());
       }
@@ -26,7 +28,7 @@ function CurrentUserMessagesPanel() {
     return () => {
       unSub();
     };
-  }, []);
+  }, [chatId]);
 
   return (
     <>
